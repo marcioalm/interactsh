@@ -18,6 +18,7 @@ import (
 	"github.com/projectdiscovery/interactsh/pkg/options"
 	"github.com/projectdiscovery/interactsh/pkg/server"
 	"github.com/projectdiscovery/interactsh/pkg/settings"
+	"github.com/projectdiscovery/interactsh/pkg/webhooks"
 	fileutil "github.com/projectdiscovery/utils/file"
 	folderutil "github.com/projectdiscovery/utils/folder"
 	updateutils "github.com/projectdiscovery/utils/update"
@@ -259,6 +260,7 @@ func writeOutput(outputFile *os.File, builder *bytes.Buffer) {
 		_, _ = outputFile.Write([]byte("\n"))
 	}
 	gologger.Silent().Msgf("%s", builder.String())
+	webhooks.SendMsg(builder.String())
 }
 
 type regexMatcher struct {
