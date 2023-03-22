@@ -260,7 +260,8 @@ func writeOutput(outputFile *os.File, builder *bytes.Buffer) {
 		_, _ = outputFile.Write([]byte("\n"))
 	}
 	gologger.Silent().Msgf("%s", builder.String())
-	webhooks.SendMsg(builder.String())
+	// Send output message through webhooks if any of them is configured
+	webhooks.SendMsg("```" + builder.String() + "```")
 }
 
 type regexMatcher struct {
